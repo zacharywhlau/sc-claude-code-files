@@ -60,22 +60,45 @@ data_analysis/
 
 ### Prerequisites
 - Python 3.8 or higher
-- Jupyter Notebook or JupyterLab (for notebook analysis)
+- [uv](https://github.com/astral-sh/uv) — fast Python package manager (install with `curl -LsSf https://astral.sh/uv/install.sh | sh`)
 
-### Installation Steps
+### Environment Setup
 
-1. **Clone or download the project files**
+**Step 1 — Create a virtual environment**
+```bash
+uv venv
+```
+- `uv venv` creates an isolated `.venv/` folder in the current directory using your system Python. Isolation means installed packages here won't affect other projects.
 
-2. **Install required dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+**Step 2 — Activate the virtual environment**
+```bash
+source .venv/bin/activate
+```
+- `source` runs the script in the current shell (not a subshell), so the environment changes (like `PATH`) persist in your session.
+- `.venv/bin/activate` is the activation script that points your shell to the venv's Python and pip.
+- Your prompt will prefix with `(.venv)` to confirm it's active.
 
-3. **Ensure data files are in place**:
-   - Place CSV files in the `ecommerce_data/` directory
-   - Verify all required files are present (see Project Structure above)
+**Step 3 — Install dependencies**
+```bash
+uv pip install -r requirements.txt
+```
+- `uv pip install` is uv's fast drop-in for `pip install`.
+- `-r` (short for `--requirement`) tells it to read package names from a file rather than the command line.
+- `requirements.txt` lists all packages (pandas, plotly, streamlit, etc.) with minimum version constraints.
 
-4. **Run the applications**:
+**Step 4 — Register the Jupyter kernel**
+```bash
+python -m ipykernel install --user --name lesson7 --display-name "Lesson 7"
+```
+- `-m ipykernel` runs the `ipykernel` module as a script (same as calling `ipykernel` directly).
+- `install` registers the current Python environment as a selectable kernel inside Jupyter/VS Code.
+- `--user` installs the kernel for your user only (into `~/Library/Jupyter/kernels/`) rather than system-wide, so no admin rights needed.
+- `--name lesson7` sets the internal identifier for the kernel (used in file paths).
+- `--display-name "Lesson 7"` sets the human-readable name shown in the kernel picker UI.
+
+After these steps, open `EDA.ipynb` in VS Code or JupyterLab and select **"Lesson 7"** from the kernel picker.
+
+### Run the applications
 
    **For Streamlit Dashboard**:
    ```bash
